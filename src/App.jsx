@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useState } from 'react'
+import Header from './components/Header'
 
 function App() {
-  const [count, setCount] = useState(0);
+    return (
+        <div className="">
+            {/* header */}
+            <Header />
 
-  return <div className="text-3xl font-bold underline">Hello World</div>;
+            {/* list of items with links  */}
+        </div>
+    )
 }
 
-export default App;
+export default App
