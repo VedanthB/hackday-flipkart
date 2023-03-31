@@ -1,37 +1,59 @@
+/* eslint-disable no-nested-ternary */
 import { useState } from 'react'
 // eslint-disable-next-line import/no-named-as-default
 import GiftForm from './components/GiftForm'
 import Header from './components/Header'
 
 function App() {
-    const [output, setOutput] = useState('')
+    const [output, setOutput] = useState(null)
+
+    const [giftDetails, setGiftDetails] = useState({
+        occasion: '',
+        for: '',
+        preferences: '',
+        budget: 0,
+        loading: false,
+    })
 
     return (
-        <div className="">
-            {/* header */}
+        <div className="bg-white">
             <Header />
 
-            {/* Form  */}
-            <GiftForm setOutput={setOutput} />
-            {/* list of items with links  */}
+            <div className="flex justify-around bg-white pb-28 mt-10 flex-wrap">
+                <GiftForm
+                    giftDetails={giftDetails}
+                    setGiftDetails={setGiftDetails}
+                    setOutput={setOutput}
+                />
 
-            <ul className="m-auto max-w-lg mb-20 text-sm font-medium border rounded-lg bg-gray-700 border-gray-600 text-white">
-                {output &&
-                    output?.map((item) => (
-                        <a
-                            href={`https://www.flipkart.com/search?q=${item} under 20000`}
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            <li
-                                className="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg"
+                {/* list of items with links  */}
+
+                <ul className="text-gray-900">
+                    {output ? (
+                        output?.map((item) => (
+                            <a
+                                href={`https://www.flipkart.com/search?q=${item} ${giftDetails.budget} `}
+                                target="_blank"
+                                rel="noreferrer"
                                 key={item}
                             >
-                                {item}
-                            </li>
-                        </a>
-                    ))}
-            </ul>
+                                <div className="flex flex-col w-[32rem] pb-3 border-b border-gray-200 hover:text-blue-500">
+                                    <div className="text-lg w-full font-semibold">
+                                        {item}
+                                    </div>
+                                </div>
+                            </a>
+                        ))
+                    ) : (
+                        <div className="flex h-full justify-center items-center">
+                            <div className="max-w-lg text-3xl font-semibold leading-relaxed text-gray-900">
+                                Please fill the form with the details to get AI
+                                powered gift recommendation
+                            </div>
+                        </div>
+                    )}
+                </ul>
+            </div>
         </div>
     )
 }
